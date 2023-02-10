@@ -1,0 +1,61 @@
+﻿@page "/address-book"
+@using Infra.Repository
+<PageTitle>Address Book</PageTitle>
+
+<h1>Address Book</h1>
+<p>This component demonstrates fetching data from the server. With sqlite DataBase</p>
+
+@if (_contacts == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Contact Id</th>
+            <th>Name. (Contact Name)</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Mobile </th>
+            <th>Home </th>
+            <th>Work </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var contact in _contacts)
+        {
+            <tr>
+                <td>@contact.ContactId</td>
+                <td>@contact.Name</td>
+                <td>@contact.Email</td>
+                <td>@contact.Address</td>
+                <td>@contact.MobilePhone</td>
+                <td>@contact.HomePhone</td>
+                <td>@contact.WorkPhone</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    
+    private IEnumerable<Core.Entities.Contact> _contacts { get; set; } = Enumerable.Empty<Core.Entities.Contact>();
+
+    [Inject]
+    IAddressBookRepository AddressBookRepository { get; set; } = default!;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _contacts = await AddressBookRepository.GetContactAsync();
+    }
+
+
+
+}

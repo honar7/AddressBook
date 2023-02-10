@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Infra", "AddressBook.Infra\AddressBook.Infra.csproj", "{718B2C6C-962F-4FA6-A0B4-C5DD5FF87444}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Core", "AddressBook.Core\AddressBook.Core.csproj", "{7C28CDAF-B713-4C24-B2A0-A74610D79E5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Endpoint", "AddressBook.Endpoint\AddressBook.Endpoint.csproj", "{F434A8ED-C31E-43F2-9AF4-526F70D3593D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Blazor", "AddressBook.Blazor\AddressBook.Blazor.csproj", "{E1A43D6F-7E6C-4D20-9AE5-6F29588335AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{718B2C6C-962F-4FA6-A0B4-C5DD5FF87444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{718B2C6C-962F-4FA6-A0B4-C5DD5FF87444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{718B2C6C-962F-4FA6-A0B4-C5DD5FF87444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{718B2C6C-962F-4FA6-A0B4-C5DD5FF87444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C28CDAF-B713-4C24-B2A0-A74610D79E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C28CDAF-B713-4C24-B2A0-A74610D79E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C28CDAF-B713-4C24-B2A0-A74610D79E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C28CDAF-B713-4C24-B2A0-A74610D79E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F434A8ED-C31E-43F2-9AF4-526F70D3593D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F434A8ED-C31E-43F2-9AF4-526F70D3593D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F434A8ED-C31E-43F2-9AF4-526F70D3593D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F434A8ED-C31E-43F2-9AF4-526F70D3593D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A43D6F-7E6C-4D20-9AE5-6F29588335AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A43D6F-7E6C-4D20-9AE5-6F29588335AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A43D6F-7E6C-4D20-9AE5-6F29588335AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A43D6F-7E6C-4D20-9AE5-6F29588335AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
