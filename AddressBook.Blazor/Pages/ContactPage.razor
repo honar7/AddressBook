@@ -1,0 +1,112 @@
+﻿@page "/address-book-page"
+
+@using Infra.Repository
+@using Microsoft.AspNetCore.Components
+@using MudBlazor
+@inject IContactRepository contactRepository
+@inject ISnackbar snackBar
+
+<MudCard Elevation="25">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Add / Edit Contact </MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudTextField @bind-Value="contact.FirstName" Label="First Name" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.LastName" Label="Last Name" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.MobilePhone" Label="Phone Number" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.Address" Label="Address" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.Email" Label="Email" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.WorkPhone" Label="Work Phone" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.HomePhone" Label="Home Phone" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
+        
+        <br/>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" StartIcon="@Icons.Material.Filled.Save">Save Customer</MudButton>
+    </MudCardContent>
+</MudCard>
+<br/>
+<MudTable Elevation="25" Items="getContacts()" Filter="new Func<Core.Entities.Contact, bool>(Search)" @bind-customer="contact">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Customers</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search for Customers..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Id</MudTh>
+        <MudTh>First Name</MudTh>
+        <MudTh>Last Name</MudTh>
+        <MudTh>Phone Number</MudTh>
+        <MudTh> Address</MudTh>
+          <MudTh> Email</MudTh>
+        <MudTh>Actions</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="FirstName">@context.FirstName</MudTd>
+        <MudTd DataLabel="LastName">@context.LastName</MudTd>
+        <MudTd DataLabel="PhoneNumber">@context.MobilePhone</MudTd>
+        <MudTd DataLabel="Address">@context.Address</MudTd>
+        <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd DataLabel="">
+            <MudFab @onclick="@(() => Edit(context.Id))" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small"/>
+            <MudFab @onclick="@(() => Delete(context.Id))" Color="Color.Secondary" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small"/>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code{
+    private bool hover = false;
+    private string searchString = "";
+
+    private Core.Entities.Contact contact = new();
+    private List<Core.Entities.Contact> contacts = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        getContacts();
+    }
+
+    private List<Core.Entities.Contact> getContacts()
+    {
+        contacts  = contactRepository.GetAllContacts();
+        return contacts;
+    }
+
+    private bool Search(Core.Entities.Contact contact)
+    {
+        if (string.IsNullOrWhiteSpace(searchString)) return true;
+        if (contact.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+            || contact.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+            || contact.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+            || contact.MobilePhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
+            || contact.HomePhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
+            || contact.WorkPhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
+        )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void Save()
+    {
+        contactRepository.AddContact(contact);
+        contact = new Core.Entities.Contact();
+        snackBar.Add("Contact Is Saved.", Severity.Success);
+        getContacts();
+    }
+
+    private void Edit(long id)
+    {
+        contact = contacts.FirstOrDefault(c => c.Id == id);
+    }
+
+    private void Delete(long id)
+    {
+        contactRepository.DeleteContact(id);
+        snackBar.Add("Contact Is Deleted.", Severity.Success);
+        getContacts();
+    }
+
+}

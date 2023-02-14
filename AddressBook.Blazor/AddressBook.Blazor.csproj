@@ -10,4 +10,12 @@
       <ProjectReference Include="..\AddressBook.Infra\AddressBook.Infra.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="MudBlazor" Version="6.1.8" />   
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data" />
+    </ItemGroup>
+
 </Project>

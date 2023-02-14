@@ -16,14 +16,14 @@ public class ContactRepository : IContactRepository
     }
 
 
-    public async Task<IEnumerable<Contact>> GetAllContacts()
+    public  List<Contact> GetAllContacts()
     {
-        return _context.Contacts;
+        return  _context.Contacts.ToList();
     }
 
-    public Contact GetContactById(int contactId)
+    public Contact GetContactById(long Id)
     {
-        return _context.Contacts.FirstOrDefault(x => x.ContactId == contactId);
+        return _context.Contacts.FirstOrDefault(x => x.Id == Id);
     }
 
     public Contact AddContact(Contact contact)
@@ -35,11 +35,12 @@ public class ContactRepository : IContactRepository
 
     public Contact UpdateContact(Contact contact)
     {
-        var foundEntity = _context.Contacts.FirstOrDefault(x => x.ContactId == contact.ContactId);
+        var foundEntity = _context.Contacts.FirstOrDefault(x => x.Id == contact.Id);
 
         if (foundEntity == null) return null;
 
-        foundEntity.Name = contact.Name;
+        foundEntity.FirstName = contact.FirstName;
+        foundEntity.LastName = contact.LastName;
         foundEntity.Address = contact.Address;
         foundEntity.Email = contact.Email;
         foundEntity.MobilePhone = contact.MobilePhone;
@@ -51,9 +52,9 @@ public class ContactRepository : IContactRepository
         return foundEntity;
     }
 
-    public void DeleteContact(int contactId)
+    public void DeleteContact(long Id)
     {
-        var foundEntity = _context.Contacts.FirstOrDefault(x => x.ContactId == contactId);
+        var foundEntity = _context.Contacts.FirstOrDefault(x => x.Id == Id);
         if (foundEntity == null)
             return;
 

@@ -4,18 +4,17 @@ namespace Core.Entities;
 
 public class Contact
 {
-    public int ContactId { get; set; }
+    public long Id { get; set; }
 
     [Required]
-    [StringLength(128, ErrorMessage = "Name is long too long")]
-    public string Name { get; set; }
-
+    [StringLength(128, ErrorMessage = "FirstName is long too long")]
+    public string FirstName { get; set; }
+    [Required]
+    [StringLength(128, ErrorMessage = "LastName is long too long")]
+    public string LastName { get; set; }
     [Required] public string Email { get; set; }
     [Required] public string Address { get; set; }
-
     [Required] public string MobilePhone { get; set; }
-
     public string? HomePhone { get; set; }
-
     public string? WorkPhone { get; set; }
 }

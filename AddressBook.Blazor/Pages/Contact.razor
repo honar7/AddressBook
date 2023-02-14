@@ -2,6 +2,8 @@
 @using Infra.Repository
 <PageTitle>Address Book</PageTitle>
 
+@inject ILogger<Contact> Logger
+
 <h1>Address Book</h1>
 <p>This component demonstrates fetching data from the server. With sqlite DataBase</p>
 
@@ -12,12 +14,14 @@
     </p>
 }
 else
-{
+{    
+   
     <table class="table">
         <thead>
         <tr>
             <th>Contact Id</th>
-            <th>Name. (Contact Name)</th>
+            <th>FirstName </th>
+            <th>LastName</th>
             <th>Email</th>
             <th>Address</th>
             <th>Mobile </th>
@@ -29,8 +33,9 @@ else
         @foreach (var contact in _contacts)
         {
             <tr>
-                <td>@contact.ContactId</td>
-                <td>@contact.Name</td>
+                <td>@contact.Id</td>
+                <td>@contact.FirstName</td>
+                <td>@contact.LastName</td>
                 <td>@contact.Email</td>
                 <td>@contact.Address</td>
                 <td>@contact.MobilePhone</td>
@@ -43,19 +48,17 @@ else
 }
 
 @code {
-    
-    private IEnumerable<Core.Entities.Contact> _contacts { get; set; } = Enumerable.Empty<Core.Entities.Contact>();
 
+    private IEnumerable<Core.Entities.Contact> _contacts { get; set; } = Enumerable.Empty<Core.Entities.Contact>();
+    
     [Inject]
-    IAddressBookRepository AddressBookRepository { get; set; } = default!;
+    IAddressBookService AddressBookService { get; set; } = default!;
 
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        _contacts = await AddressBookRepository.GetContactAsync();
+        if(_contacts == Enumerable.Empty<Core.Entities.Contact>())
+            _contacts = await AddressBookService.GetContactAsync();
     }
-
-
-
 }

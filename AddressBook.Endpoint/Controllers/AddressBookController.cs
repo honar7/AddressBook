@@ -17,10 +17,8 @@ public class AddressBookController : Controller
 
     [HttpGet]
     [Route("GetAllContacts")]
-    public async Task<IEnumerable<Contact>> GetAllContacts()
+    public  List<Contact> GetAllContacts()
     {
-        // if(_contactRepository.Equals(true))   
-        return await _contactRepository.GetAllContacts();
-        // return new List<Contact>() { };
+        return  _contactRepository.GetAllContacts();
     }
 }

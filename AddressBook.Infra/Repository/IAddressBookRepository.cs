@@ -2,7 +2,7 @@
 
 namespace Infra.Repository;
 
-public interface IAddressBookRepository
+public interface IAddressBookService
 {
     Task<IEnumerable<Contact>> GetContactAsync();
 }

@@ -5,13 +5,13 @@ namespace Infra.Repository;
 public interface IContactRepository
     // : IDisposable
 {
-    Task<IEnumerable<Contact>> GetAllContacts();
+    List<Contact> GetAllContacts();
 
-    Contact GetContactById(int contactId);
+    Contact GetContactById(long Id);
 
     Contact AddContact(Contact contact);
 
     Contact UpdateContact(Contact contact);
 
-    void DeleteContact(int contactId);
+    void DeleteContact(long Id);
 }
