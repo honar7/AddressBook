@@ -13,14 +13,15 @@
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardContent>
+         <MudTextField @bind-Value="contact.Id" Label="Id" Variant="Variant.Filled" Margin="Margin.Normal" Disabled="true"></MudTextField>
         <MudTextField @bind-Value="contact.FirstName" Label="First Name" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
         <MudTextField @bind-Value="contact.LastName" Label="Last Name" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.MobilePhone" Label="Phone Number" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.Address" Label="Address" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.Email" Label="Email" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.WorkPhone" Label="Work Phone" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.HomePhone" Label="Home Phone" Variant="Variant.Outlined" Margin="Margin.Normal"></MudTextField>
-        
+        <MudTextField @bind-Value="contact.MobilePhone" Label="Phone Number" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.Address" Label="Address" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.Email" Label="Email" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.WorkPhone" Label="Work Phone" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+        <MudTextField @bind-Value="contact.HomePhone" Label="Home Phone" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+
         <br/>
         <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" StartIcon="@Icons.Material.Filled.Save">Save Customer</MudButton>
     </MudCardContent>
@@ -38,7 +39,7 @@
         <MudTh>Last Name</MudTh>
         <MudTh>Phone Number</MudTh>
         <MudTh> Address</MudTh>
-          <MudTh> Email</MudTh>
+        <MudTh> Email</MudTh>
         <MudTh>Actions</MudTh>
     </HeaderContent>
     <RowTemplate>
@@ -76,24 +77,29 @@
     private bool Search(Core.Entities.Contact contact)
     {
         if (string.IsNullOrWhiteSpace(searchString)) return true;
-        if (contact.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-            || contact.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-            || contact.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-            || contact.MobilePhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
-            || contact.HomePhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
-            || contact.WorkPhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
-        )
-        {
-            return true;
-        }
-        return false;
+        return contact.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+               || contact.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+               || contact.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+               || contact.MobilePhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
+               || contact.HomePhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
+               || contact.WorkPhone.Contains(searchString, StringComparison.OrdinalIgnoreCase);
     }
 
     private void Save()
     {
-        contactRepository.AddContact(contact);
+        if (contact.Id > 0)
+        {
+            contactRepository.UpdateContact(contact);
+            snackBar.Add("Contact Is Updated.", Severity.Success);
+        }
+        else
+        {
+            contactRepository.AddContact(contact);
+            snackBar.Add("Contact Is Saved.", Severity.Success);
+        }
+        
         contact = new Core.Entities.Contact();
-        snackBar.Add("Contact Is Saved.", Severity.Success);
+      
         getContacts();
     }
 

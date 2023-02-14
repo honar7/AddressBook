@@ -10,6 +10,7 @@ public class SqliteDbContext : DbContext
     {
         // Database.EnsureDeleted();
         // Database.EnsureCreated();
+        Database.Migrate();
     }
 
     public DbSet<Contact> Contacts { get; set; }
@@ -20,6 +21,18 @@ public class SqliteDbContext : DbContext
         builder.Entity<Contact>()
             .Property(e => e.Id)
             .ValueGeneratedOnAdd();
+        builder.Entity<Contact>()
+            .Property(e => e.FirstName)
+            .IsRequired()
+            .HasMaxLength(128);
+        builder.Entity<Contact>()
+            .Property(e => e.LastName)
+            .IsRequired()
+            .HasMaxLength(128);
+        
+        builder.Entity<Contact>()
+            .Property(e => e.Email)
+            .IsRequired();
       
         // builder.Entity<Contact>().HasData(new Contact
         // {

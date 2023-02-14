@@ -4,7 +4,7 @@ using Infra.Context;
 namespace Infra.Repository;
 
 public class ContactRepository : IContactRepository
-    // , IDisposable
+    , IDisposable
 {
     private readonly SqliteDbContext _context;
 
@@ -28,6 +28,7 @@ public class ContactRepository : IContactRepository
 
     public Contact AddContact(Contact contact)
     {
+        
         var addedEntity = _context.Contacts.Add(contact);
         _context.SaveChanges();
         return addedEntity.Entity;
@@ -63,21 +64,21 @@ public class ContactRepository : IContactRepository
     }
 
 
-    // private void Dispose(bool disposing)
-    // {
-    //     if (!this.disposed)
-    //     {
-    //         if (disposing)
-    //         {
-    //             _context.Dispose();
-    //         }
-    //     }
-    //     this.disposed = true;
-    // }
-    //
-    // public void Dispose()
-    // {
-    //     Dispose(true);
-    //     GC.SuppressFinalize(this);
-    // }
+    private void Dispose(bool disposing)
+    {
+        if (!this.disposed)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+        }
+        this.disposed = true;
+    }
+    
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 }
