@@ -1,5 +1,7 @@
 ﻿using Core.Entities;
 using Infra.Context;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Repository;
 
@@ -16,25 +18,30 @@ public class ContactRepository : IContactRepository
     }
 
 
-    public  List<Contact> GetAllContacts()
+    public async Task<List<Contact>> GetAllContacts()
     {
-        return  _context.Contacts.ToList();
+        return  await _context.Contacts.ToListAsync();
     }
 
-    public Contact GetContactById(long Id)
+    public List<Contact> GetAll()
     {
-        return _context.Contacts.FirstOrDefault(x => x.Id == Id);
+        return _context.Contacts.ToList();
     }
 
-    public Contact AddContact(Contact contact)
+    public Task<Contact> GetContactById(long Id)
+    {
+        return _context.Contacts.FirstOrDefaultAsync(x => x.Id == Id);
+    }
+
+    public async Task<Contact> AddContact(Contact contact)
     {
         
         var addedEntity = _context.Contacts.Add(contact);
-        _context.SaveChanges();
+        _context.SaveChangesAsync();
         return addedEntity.Entity;
     }
 
-    public Contact UpdateContact(Contact contact)
+    public async Task<Contact> UpdateContact(Contact contact)
     {
         var foundEntity = _context.Contacts.FirstOrDefault(x => x.Id == contact.Id);
 
@@ -48,21 +55,26 @@ public class ContactRepository : IContactRepository
         foundEntity.HomePhone = contact.HomePhone;
         foundEntity.WorkPhone = contact.WorkPhone;
 
-        _context.SaveChanges();
+        _context.SaveChangesAsync();
 
         return foundEntity;
     }
 
-    public void DeleteContact(long Id)
+    public async Task<Contact>  DeleteContact(long Id)
     {
         var foundEntity = _context.Contacts.FirstOrDefault(x => x.Id == Id);
         if (foundEntity == null)
-            return;
+            return null;
 
         _context.Contacts.Remove(foundEntity);
-        _context.SaveChanges();
+       await _context.SaveChangesAsync();
+       return foundEntity;
     }
-
+    public async Task<bool> GetContactByEmail(string email)
+    {
+        return await _context.Contacts
+            .AnyAsync(e => e.Email == email);
+    }
 
     private void Dispose(bool disposing)
     {

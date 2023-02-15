@@ -1,17 +1,15 @@
 ﻿using Core.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Infra.Repository;
 
-public interface IContactRepository
-    // : IDisposable
+public interface IContactRepository : IDisposable
 {
-    List<Contact> GetAllContacts();
-
-    Contact GetContactById(long Id);
-
-    Contact AddContact(Contact contact);
-
-    Contact UpdateContact(Contact contact);
-
-    void DeleteContact(long Id);
+    Task<Contact> AddContact(Contact contact);
+    Task<List<Contact>> GetAllContacts();
+    List<Contact> GetAll();
+    Task<Contact> GetContactById(long Id);
+    Task<Contact> UpdateContact(Contact contact);
+    Task<Contact> DeleteContact(long Id);
+    Task<bool> GetContactByEmail(string email);
 }
