@@ -1,64 +1,96 @@
 ﻿@page "/address-book-page"
-
-@using Infra.Repository
-@using Microsoft.AspNetCore.Components
-@using MudBlazor
 @inject IContactRepository contactRepository
 @inject ISnackbar snackBar
 
-<MudCard Elevation="25">
-    <MudCardHeader>
-        <CardHeaderContent>
-            <MudText Typo="Typo.h6">Add / Edit Contact </MudText>
-        </CardHeaderContent>
-    </MudCardHeader>
-    <MudCardContent>
-         <MudTextField @bind-Value="contact.Id" Label="Id" Variant="Variant.Filled" Margin="Margin.Normal" Disabled="true"></MudTextField>
-        <MudTextField @bind-Value="contact.FirstName" Label="First Name" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.LastName" Label="Last Name" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.MobilePhone" Label="Phone Number" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.Address" Label="Address" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.Email" Label="Email" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.WorkPhone" Label="Work Phone" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
-        <MudTextField @bind-Value="contact.HomePhone" Label="Home Phone" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
 
-        <br/>
-        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" StartIcon="@Icons.Material.Filled.Save">Save Customer</MudButton>
-    </MudCardContent>
-</MudCard>
-<br/>
-<MudTable Elevation="25" Items="getContacts()" Filter="new Func<Core.Entities.Contact, bool>(Search)" @bind-customer="contact">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">Customers</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search for Customers..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-    </ToolBarContent>
-    <HeaderContent>
-        <MudTh>Id</MudTh>
-        <MudTh>First Name</MudTh>
-        <MudTh>Last Name</MudTh>
-        <MudTh>Phone Number</MudTh>
-        <MudTh> Address</MudTh>
-        <MudTh> Email</MudTh>
-        <MudTh>Actions</MudTh>
-    </HeaderContent>
+<MudExpansionPanels>
+    <MudExpansionPanel Text=" Add / Edit Contact" MaxHeight="600">
+        <MudCard Elevation="25">
+            @* <MudCardHeader> *@
+            @*        <CardHeaderContent> *@
+            @*            <MudText Typo="Typo.h6"> </MudText> *@
+            @*        </CardHeaderContent> *@
+            @*    </MudCardHeader> *@
+            <MudCardContent>
+                <MudTextField @bind-Value="contact.Id" Label="Id" Variant="Variant.Filled" Margin="Margin.Normal" hidden="true"></MudTextField>
+                <MudGrid>
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudField Label=" Name Section" Variant="Variant.Outlined" InnerPadding="true">
+                            <MudIcon Icon="@Icons.Material.Filled.Description" Color="@Color.Warning"/>
+                            <MudTextField @bind-Value="contact.FirstName" xs="6" Label="First Name" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+                            <MudTextField @bind-Value="contact.LastName" Label="Last Name" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+                        </MudField>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudField Label="Address and Email" Variant="Variant.Outlined" InnerPadding="true">
+                            <MudIcon Icon="@Icons.Material.Filled.LocationCity" Color="@Color.Primary"/>
+                            <MudTextField @bind-Value="contact.Address" Label="Address" Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+                            <MudTextField @bind-Value="contact.Email" Label="Email" Variant="Variant.Text" Mask="RegexMask.Email()" Margin="Margin.Normal"></MudTextField>
+                        </MudField>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudField Label="Phone Number" Variant="Variant.Outlined" InnerPadding="false">
+                            <MudIcon Icon="@Icons.Material.Filled.Phone" Color="@Color.Secondary"/>
+                            <MudTextField @bind-Value="contact.MobilePhone" Label="Mobile " Variant="Variant.Text"  Margin="Margin.Normal"></MudTextField>
+                            <MudTextField @bind-Value="contact.WorkPhone" Label="Work " Variant="Variant.Text"     Margin="Margin.Normal"></MudTextField>
+                            <MudTextField @bind-Value="contact.HomePhone" Label="Home " Variant="Variant.Text"      Margin="Margin.Normal"></MudTextField>
+                        </MudField>
+                    </MudItem>
+                </MudGrid>
+                <br/>
+                <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" StartIcon="@Icons.Material.Filled.Save">Save Contact</MudButton>
+            </MudCardContent>
+        </MudCard>
+    </MudExpansionPanel>
+</MudExpansionPanels>
+
+<MudTable Elevation="25" Height="600" Items="getContacts()" Filter="new Func<Core.Entities.Contact, bool>(Search)" @bind-Contact="contact" RowsPerPage="5">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Contacts</MudText>
+                <MudSpacer/>
+                <MudTextField @bind-Value="searchString" Placeholder="Search for Contacts..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Id</MudTh>
+                <MudTh>First Name</MudTh>
+                <MudTh>Last Name</MudTh>
+                <MudTh>Address</MudTh>
+                <MudTh>Email</MudTh>
+                <MudTh>Phone </MudTh>
+                <MudTh>Home </MudTh>
+                <MudTh>Work </MudTh>
+                <MudTh>Actions</MudTh>
+            </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="FirstName">@context.FirstName</MudTd>
         <MudTd DataLabel="LastName">@context.LastName</MudTd>
-        <MudTd DataLabel="PhoneNumber">@context.MobilePhone</MudTd>
         <MudTd DataLabel="Address">@context.Address</MudTd>
         <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd DataLabel="Phone" >@context.MobilePhone</MudTd>
+        <MudTd DataLabel="Home">@context.HomePhone</MudTd>
+        <MudTd DataLabel="work">@context.WorkPhone</MudTd>
         <MudTd DataLabel="">
             <MudFab @onclick="@(() => Edit(context.Id))" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small"/>
             <MudFab @onclick="@(() => Delete(context.Id))" Color="Color.Secondary" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small"/>
         </MudTd>
     </RowTemplate>
-</MudTable>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+    
+    </MudTable>
+
+
+<br/>
+
 
 @code{
     private bool hover = false;
     private string searchString = "";
+    private IMask phoneMask = new RegexMask(@"^\d+$");
 
     private Core.Entities.Contact contact = new();
     private List<Core.Entities.Contact> contacts = new();
@@ -70,7 +102,7 @@
 
     private List<Core.Entities.Contact> getContacts()
     {
-        contacts  = contactRepository.GetAll();
+        contacts = contactRepository.GetAll();
         return contacts;
     }
 
@@ -80,9 +112,8 @@
         return contact.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                || contact.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                || contact.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase)
-               || contact.MobilePhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
-               || contact.HomePhone.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
-               || contact.WorkPhone.Contains(searchString, StringComparison.OrdinalIgnoreCase);
+               || contact.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase);
+ 
     }
 
     private void Save()
@@ -97,9 +128,9 @@
             contactRepository.AddContact(contact);
             snackBar.Add("Contact Is Saved.", Severity.Success);
         }
-        
+
         contact = new Core.Entities.Contact();
-      
+
         getContacts();
     }
 
