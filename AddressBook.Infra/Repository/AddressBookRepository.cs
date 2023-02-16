@@ -14,7 +14,7 @@ public class AddressBookService : IAddressBookService
 
     public async Task<IEnumerable<Contact>> GetContactAsync()
     {
-        _contacts ??= await _httpClient.GetFromJsonAsync<Contact[]>("GetAllContact" );
+        _contacts ??= await _httpClient.GetFromJsonAsync<Contact[]>("GetAllContact");
         return _contacts!;
     }
 }

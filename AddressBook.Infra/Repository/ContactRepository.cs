@@ -20,7 +20,7 @@ public class ContactRepository : IContactRepository
 
     public async Task<List<Contact>> GetAllContacts()
     {
-        return  await _context.Contacts.ToListAsync();
+        return await _context.Contacts.ToListAsync();
     }
 
     public List<Contact> GetAll()
@@ -35,7 +35,6 @@ public class ContactRepository : IContactRepository
 
     public async Task<Contact> AddContact(Contact contact)
     {
-        
         var addedEntity = _context.Contacts.Add(contact);
         _context.SaveChangesAsync();
         return addedEntity.Entity;
@@ -60,16 +59,17 @@ public class ContactRepository : IContactRepository
         return foundEntity;
     }
 
-    public async Task<Contact>  DeleteContact(long Id)
+    public async Task<Contact> DeleteContact(long Id)
     {
         var foundEntity = _context.Contacts.FirstOrDefault(x => x.Id == Id);
         if (foundEntity == null)
             return null;
 
         _context.Contacts.Remove(foundEntity);
-       await _context.SaveChangesAsync();
-       return foundEntity;
+        await _context.SaveChangesAsync();
+        return foundEntity;
     }
+
     public async Task<bool> GetContactByEmail(string email)
     {
         return await _context.Contacts
@@ -78,16 +78,12 @@ public class ContactRepository : IContactRepository
 
     private void Dispose(bool disposing)
     {
-        if (!this.disposed)
-        {
+        if (!disposed)
             if (disposing)
-            {
                 _context.Dispose();
-            }
-        }
-        this.disposed = true;
+        disposed = true;
     }
-    
+
     public void Dispose()
     {
         Dispose(true);

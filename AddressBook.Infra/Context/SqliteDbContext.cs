@@ -15,6 +15,7 @@ public class SqliteDbContext : DbContext
 
     public DbSet<Contact> Contacts { get; set; }
     public Contact Contact { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -29,11 +30,11 @@ public class SqliteDbContext : DbContext
             .Property(e => e.LastName)
             .IsRequired()
             .HasMaxLength(128);
-        
+
         builder.Entity<Contact>()
             .Property(e => e.Email)
             .IsRequired();
-      
+
         // builder.Entity<Contact>().HasData(new Contact
         // {
         //     Id = 1,

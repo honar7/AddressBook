@@ -15,11 +15,11 @@ public class AddressBookController : Controller
         _contactRepository = contactRepository;
     }
 
-   
+
     [HttpGet("{id:long}")]
-    public  Task<Contact> GetContactById(long id)
+    public Task<Contact> GetContactById(long id)
     {
-        return  _contactRepository.GetContactById(id);
+        return _contactRepository.GetContactById(id);
     }
 
     [HttpGet]
@@ -28,7 +28,7 @@ public class AddressBookController : Controller
     {
         return await _contactRepository.GetAllContacts();
     }
-    
+
     [HttpGet]
     public async Task<ActionResult> GetAllContacts()
     {
@@ -42,20 +42,17 @@ public class AddressBookController : Controller
                 "Error retrieving data from the database");
         }
     }
-    
+
     [HttpPost]
     public async Task<ActionResult<Contact>> CreateContact(Contact contact)
     {
         try
         {
-            if(contact == null)
-            {
-                return BadRequest();
-            }
+            if (contact == null) return BadRequest();
 
             var con = _contactRepository.GetContactByEmail(contact.Email);
 
-            if(con.Result )
+            if (con.Result)
             {
                 ModelState.AddModelError("email", "Contact email already in use");
                 return BadRequest(ModelState);
@@ -72,7 +69,7 @@ public class AddressBookController : Controller
                 "Error retrieving data from the database");
         }
     }
-    
+
     [HttpPut("{id:int}")]
     public async Task<ActionResult<Contact>> UpdateContact(int id, Contact contact)
     {
@@ -94,8 +91,8 @@ public class AddressBookController : Controller
                 "Error updating data");
         }
     }
-    
-    
+
+
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<Contact>> DeleteContact(int id)
     {
@@ -103,7 +100,9 @@ public class AddressBookController : Controller
         {
             var contactToDelete = await _contactRepository.GetContactById(id);
 
-            return contactToDelete == null ? NotFound($"Contact with Id = {id} not found") : await  _contactRepository.DeleteContact(id);
+            return contactToDelete == null
+                ? NotFound($"Contact with Id = {id} not found")
+                : await _contactRepository.DeleteContact(id);
         }
         catch (Exception)
         {

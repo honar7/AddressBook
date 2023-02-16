@@ -33,9 +33,9 @@
                     <MudItem xs="12" sm="6" md="4">
                         <MudField Label="Phone Number" Variant="Variant.Outlined" InnerPadding="false">
                             <MudIcon Icon="@Icons.Material.Filled.Phone" Color="@Color.Secondary"/>
-                            <MudTextField @bind-Value="contact.MobilePhone" Label="Mobile " Variant="Variant.Text"  Margin="Margin.Normal"></MudTextField>
-                            <MudTextField @bind-Value="contact.WorkPhone" Label="Work " Variant="Variant.Text"     Margin="Margin.Normal"></MudTextField>
-                            <MudTextField @bind-Value="contact.HomePhone" Label="Home " Variant="Variant.Text"      Margin="Margin.Normal"></MudTextField>
+                            <MudTextField @bind-Value="contact.MobilePhone" Label="Mobile " Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+                            <MudTextField @bind-Value="contact.WorkPhone" Label="Work " Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
+                            <MudTextField @bind-Value="contact.HomePhone" Label="Home " Variant="Variant.Text" Margin="Margin.Normal"></MudTextField>
                         </MudField>
                     </MudItem>
                 </MudGrid>
@@ -47,29 +47,29 @@
 </MudExpansionPanels>
 
 <MudTable Elevation="25" Height="600" Items="getContacts()" Filter="new Func<Core.Entities.Contact, bool>(Search)" @bind-Contact="contact" RowsPerPage="5">
-            <ToolBarContent>
-                <MudText Typo="Typo.h6">Contacts</MudText>
-                <MudSpacer/>
-                <MudTextField @bind-Value="searchString" Placeholder="Search for Contacts..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-            </ToolBarContent>
-            <HeaderContent>
-                <MudTh>Id</MudTh>
-                <MudTh>First Name</MudTh>
-                <MudTh>Last Name</MudTh>
-                <MudTh>Address</MudTh>
-                <MudTh>Email</MudTh>
-                <MudTh>Phone </MudTh>
-                <MudTh>Home </MudTh>
-                <MudTh>Work </MudTh>
-                <MudTh>Actions</MudTh>
-            </HeaderContent>
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Contacts</MudText>
+        <MudSpacer/>
+        <MudTextField @bind-Value="searchString" Placeholder="Search for Contacts..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Id</MudTh>
+        <MudTh>First Name</MudTh>
+        <MudTh>Last Name</MudTh>
+        <MudTh>Address</MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>Phone </MudTh>
+        <MudTh>Home </MudTh>
+        <MudTh>Work </MudTh>
+        <MudTh>Actions</MudTh>
+    </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="FirstName">@context.FirstName</MudTd>
         <MudTd DataLabel="LastName">@context.LastName</MudTd>
         <MudTd DataLabel="Address">@context.Address</MudTd>
         <MudTd DataLabel="Email">@context.Email</MudTd>
-        <MudTd DataLabel="Phone" >@context.MobilePhone</MudTd>
+        <MudTd DataLabel="Phone">@context.MobilePhone</MudTd>
         <MudTd DataLabel="Home">@context.HomePhone</MudTd>
         <MudTd DataLabel="work">@context.WorkPhone</MudTd>
         <MudTd DataLabel="">
@@ -78,10 +78,10 @@
         </MudTd>
     </RowTemplate>
     <PagerContent>
-        <MudTablePager />
+        <MudTablePager/>
     </PagerContent>
-    
-    </MudTable>
+
+</MudTable>
 
 
 <br/>
@@ -113,7 +113,6 @@
                || contact.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                || contact.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                || contact.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase);
- 
     }
 
     private void Save()
